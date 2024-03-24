@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
   const webpackHotMiddleware = require('webpack-hot-middleware');
   const webpackConfig = require('../webpack');
 
-  const compiler = webpack(webpackConfig);
+  const compiler = webpack(webpackConfig({}));
 
   app.use(webpackDevMiddleware(compiler));
   app.use(webpackHotMiddleware(compiler));
@@ -22,7 +22,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static('public'));
 }
 
-const {default: serverRenderer} = require('../src/serverRenderer')
+const {default: serverRenderer} = require('../public/server')
+console.log(serverRenderer, 'serverrender')
 app.use(serverRenderer);
 
 module.exports = app;

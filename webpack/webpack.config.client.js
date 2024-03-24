@@ -15,7 +15,7 @@ module.exports = merge(common, {
   ].filter(Boolean),
 
   plugins: [
-    !isDevMod && new CleanWebpackPlugin('./public', { root: path.resolve(__dirname, '../') }),
+    // !isDevMod && new CleanWebpackPlugin('./public', { root: path.resolve(__dirname, '../') }),
     isDevMod && new webpack.HotModuleReplacementPlugin(),
   ].filter(Boolean),
 });

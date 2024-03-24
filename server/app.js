@@ -1,11 +1,4 @@
 const express = require('express');
-
-// 后续require 的文件会交由 babel 转译
-require("babel-register")({
-  ignore: [/(node_modules)/],
-  presets: ["babel-preset-env", "babel-preset-react"],
-});
-
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {

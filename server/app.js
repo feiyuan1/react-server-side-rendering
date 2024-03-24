@@ -1,5 +1,11 @@
 const express = require('express');
 
+// 后续require 的文件会交由 babel 转译
+require("babel-register")({
+  ignore: [/(node_modules)/],
+  presets: ["babel-preset-env", "babel-preset-react"],
+});
+
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -16,6 +22,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static('public'));
 }
 
-app.use(require('../src/serverRenderer'));
+const {default: serverRenderer} = require('../src/serverRenderer')
+app.use(serverRenderer);
 
 module.exports = app;

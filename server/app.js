@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 
+
+const {default: serverRenderer} = require('../public/server')
+// console.log(serverRenderer, 'serverrender')
+
+app.get('/',serverRenderer);
+
+console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
   const webpack = require('webpack');
   const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -15,8 +22,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static('public'));
 }
 
-const {default: serverRenderer} = require('../public/server')
-console.log(serverRenderer, 'serverrender')
-app.use(serverRenderer);
+app.use((err, req, res) => {
+  console.log('middle-error: ', err)
+})
 
 module.exports = app;

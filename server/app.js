@@ -1,11 +1,10 @@
 const express = require('express');
+const fetchMiddleware = require('./fetchMiddleware')
 const app = express();
 
-
 const {default: serverRenderer} = require('../public/server')
-// console.log(serverRenderer, 'serverrender')
 
-app.get('/',serverRenderer);
+app.get('/', serverRenderer);
 
 console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
@@ -21,6 +20,8 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   app.use(express.static('public'));
 }
+
+app.use(fetchMiddleware)
 
 app.use((err, req, res) => {
   console.log('middle-error: ', err)

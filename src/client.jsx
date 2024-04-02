@@ -3,6 +3,7 @@ import { hydrate } from 'react-dom';
 // import StyleContext from 'isomorphic-style-loader/StyleContext'
 import Root from './Root';
 import { StoreProvider, createStore } from './storeContext';
+import { BrowserRouter } from 'react-router-dom';
 
 // const insertCss = (...styles) => {
 //   const removeCss = styles.map(style => style._insertCss())
@@ -12,7 +13,9 @@ import { StoreProvider, createStore } from './storeContext';
 const root = (
   // <StyleContext.Provider value={{ insertCss }}>
   <StoreProvider value={createStore(window.initialState)}>
-    <Root />
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
   </StoreProvider>
   // </StyleContext.Provider>
 );

@@ -2,6 +2,7 @@
 import React from "react";
 import Root from "../Root";
 import {renderToString} from 'react-dom/server'
+import { StaticRouter } from "react-router-dom";
 import { StoreProvider, createStore } from "../storeContext";
 // import StyleContext from 'isomorphic-style-loader/StyleContext'
 import path from 'path'
@@ -29,7 +30,7 @@ const parse = async (node, store) => {
   }
 }
 
-async function renderHTML() {
+async function renderHTML(location) {
   const store = createStore()
   await parse(<Root />, store)
   await Promise.all(promises)
@@ -40,7 +41,9 @@ async function renderHTML() {
   const content = renderToString( 
     // <StyleContext.Provider value={{ insertCss }}>
     <StoreProvider value={store}>
-      <Root />
+      <StaticRouter location={location}>
+        <Root />
+      </StaticRouter>
     </StoreProvider>
     // </StyleContext.Provider>
   )
@@ -55,6 +58,6 @@ async function renderHTML() {
 
 export default async function (req, res) {
   console.log('serverRender')
-  const html = await renderHTML()
+  const html = await renderHTML(req.originalUrl)
   res.send(html)
 };

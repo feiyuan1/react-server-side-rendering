@@ -22,7 +22,7 @@ Hello.propTypes = {
 };
 
 Hello.fetchData = async(store) => {
-  const result = await fetch('http://localhost:8000/get/init/data')
+  const result = await fetch('http://localhost:8000/api/init/data')
   const data = await result.text()
   store.update({data})
 }

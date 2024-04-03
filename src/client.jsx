@@ -1,23 +1,28 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import { hydrate } from 'react-dom';
-// import StyleContext from 'isomorphic-style-loader/StyleContext'
 import Root from './Root';
 import { StoreProvider, createStore } from './storeContext';
 import { BrowserRouter } from 'react-router-dom';
 
-// const insertCss = (...styles) => {
-//   const removeCss = styles.map(style => style._insertCss())
-//   return () => removeCss.forEach(dispose => dispose())
-// }
-
 const root = (
-  // <StyleContext.Provider value={{ insertCss }}>
   <StoreProvider value={createStore(window.initialState)}>
     <BrowserRouter>
       <Root />
     </BrowserRouter>
   </StoreProvider>
-  // </StyleContext.Provider>
 );
 
-hydrate(root, document.getElementById('root'));
+const RootNode = () => {
+  useLayoutEffect(() => {
+    const styles = document.getElementsByTagName('style')
+    for(let i = 0; i < styles.length; i++){
+      const styleElem = styles[i]
+      if(styleElem.dataset.hasOwnProperty('ssr')){
+        styleElem.remove()
+      }
+    }
+  })
+  return root
+}
+
+hydrate(<RootNode />, document.getElementById('root'));

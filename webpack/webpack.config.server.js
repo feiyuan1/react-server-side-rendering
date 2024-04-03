@@ -36,7 +36,7 @@ module.exports = {
         use: ['isomorphic-style-loader', {
           loader: 'css-loader',
           options: {
-            modules: false
+            modules: true // 开启 css module
           }
         }],
       },

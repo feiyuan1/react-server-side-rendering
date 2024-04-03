@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {useStoreContext} from '../../storeContext'
-// import useStyles from 'isomorphic-style-loader/useStyles'
-import './hello.css'
+import StyleContext from 'isomorphic-style-loader/StyleContext'
+import styles from './hello.css'
 
 const Hello = ({ name }) => {
   const store = useStoreContext()
+  const style = useContext(StyleContext)
+  if(typeof window === 'undefined'){
+    style.css.add(styles._getCss())
+  }
 
   useEffect(() => {
     if(store.data) {
@@ -14,7 +18,7 @@ const Hello = ({ name }) => {
   }, [])
 
   return (
-  <div className="bg">Hello <b>{name}</b> {store.data}</div>
+  <div className={styles.bg}>Hello <b>{name}</b> {store.data}</div>
 )};
 
 Hello.propTypes = {

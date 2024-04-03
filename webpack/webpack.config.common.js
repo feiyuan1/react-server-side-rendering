@@ -36,11 +36,9 @@ module.exports = {
       {
         test: /\.css?$/,
         exclude: /node_modules/,
-        // use: ['style-loader', 'css-loader'],
-        // use: ['isomorphic-style-loader', MiniCssExtractPlugin.loader,  {loader: 'css-loader', options: {
-        //   modules: true // 开启 css module
-        // }}],
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, {loader: 'css-loader', options: {
+          modules: true // 开启 css module
+        }}],
       },
       {
         test: /\.png?$/,
